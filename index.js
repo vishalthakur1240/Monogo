@@ -24,10 +24,22 @@ app.get('/', (req, res) => {
 // })
 
     // METH-2
+// app.post("/people", async (req, res) => {
+//     try {
+//         await peopleModel.create(req.body);
+//         return res.status(201).json({ message: "user Created" });
+//     } catch (error) {
+//         console.log("Error => ", error);
+//         return res.status(400).json({ message: "user Not Created" });
+//     }    
+// })
+
+    // METH-3
 app.post("/people", async (req, res) => {
     try {
-        await peopleModel.create(req.body);
-        return res.status(201).json({ message: "user Created" });
+        const user =  new peopleModel(req.body);
+        const createUser = await user.save();
+        return res.status(201).send(createUser);
     } catch (error) {
         console.log("Error => ", error);
         return res.status(400).json({ message: "user Not Created" });
